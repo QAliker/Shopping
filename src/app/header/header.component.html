@@ -22,14 +22,14 @@
           <ng-container *ngFor="let item of navigationList; let i = index">
             <li class="text-center fw-bold">{{ item.category | titlecase }}</li>
             <li
-              *ngFor="let subcategory of item.subcategories"
+              *ngFor="let subCategory of item.subcategories"
               [style.cursor]="'pointer'"
             >
               <a
                 class="dropdown-item"
-                OpenProducts [category]="{id: 0, 'category': item.category, 'subcategory': subcategory}"
+                OpenProducts [category]="{id: 0, 'category': item.category, 'subCategory': subCategory}"
               >
-                {{ subcategory | titlecase }}
+                {{ subCategory | titlecase }}
               </a>
             </li>
             <li *ngIf="i !== navigationList.length - 1">
@@ -47,7 +47,7 @@
         data-bs-toggle="modal"
         data-bs-target="#generalmodal"
         (click)="openModal('login')"
-        
+        *ngIf="!utilityService.isLoggedIn()"
       >
        Login 
       </button>
@@ -57,12 +57,14 @@
         data-bs-toggle="modal"
         data-bs-target="#generalmodal"
         (click)="openModal('register')"
+        *ngIf="!utilityService.isLoggedIn()"
       >
         Register
       </button>
       <button
         type="button"
         class="btn btn-outline-light"
+        *ngIf="utilityService.isLoggedIn()"
       >
         Account
       </button>
@@ -70,20 +72,24 @@
         type="button"
         class="btn btn-outline-light"
         routerLink="/cart"
+        *ngIf="utilityService.isLoggedIn()"
       >
         Cart
-        <span class="badge bg-warning text-dark"></span>
+        <span class="badge bg-warning text-dark">{{cartItems}}</span>
       </button>
       <button
         type="button"
         class="btn btn-outline-light"
         routerLink="/orders"
+        *ngIf="utilityService.isLoggedIn()"
       >
         Orders
       </button>
       <button
         type="button"
         class="btn btn-outline-light"
+        (click)="utilityService.logoutUser()"
+        *ngIf="utilityService.isLoggedIn()"
       >
         Logout
       </button>

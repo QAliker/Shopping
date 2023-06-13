@@ -1,31 +1,34 @@
 <div class="grid-view" *ngIf="view === 'grid'">
-  <div class="card text-center">
-    <div class="card-header fw-bold fs-5 text-success">Header</div>
+  <div class="card text-center" style= "width: 20rem;">
+    <!-- <div class="card-header fw-bold fs-5 text-success">{{product.title}}</div> -->
 
     <div
       class="overflow-hidden d-flex justify-content-center align-items-center"
     >
-      <img src="../../assets/mobiles/10/1.jpg" alt="" class="card-img-top" OpenProductDetail [productId]="1"/>
+      <img src="../../assets/{{product.productCategory.subCategory}}/{{product.id}}/1.jpg" alt="" class="card-img-top" OpenProductDetail [productId]="product.id"/>
     </div>
 
     <div class="card-body">
-      <h5 class="card-title title">Title</h5>
-      <h6 class="card-subtitle my-2 text-primary">?? Product Available</h6>
-      <p class="card-text description">Description</p>
+      <h5 class="card-title title">{{product.title}}</h5>
+      <h6 class="card-subtitle my-2 text-primary">{{product.quantity}} Products Available</h6>
+      <p class="card-text description">{{product.description}}</p>
     </div>
 
     <div class="card-body">
       <h5 class="card-title text-success">
-        Final Price
-        <span class="text-primary">-20% </span>
+        {{utilityService.applyDiscount(product.price, product.offer.discount)}}
+        <span class="text-primary">-{{product.offer.discount}}% </span>
       </h5>
       <h6 class="card-subtitle text-danger text-decoration-line-through">
-        Original Price
+        {{product.price}}
       </h6>
     </div>
 
     <div class="card-footer d-grid gap-2">
-      <button class="btn btn-outline-success" type="button">Add to Cart</button>
+      <button class="btn btn-outline-success" type="button" [disabled]="!utilityService.isLoggedIn()"
+      (click)="this.utilityService.addToCart(product)">Add to Cart
+      <span *ngIf="!utilityService.isLoggedIn()">(Login first)</span>
+    </button>
     </div>
   </div>
 </div>
@@ -37,27 +40,28 @@
         class="col-md-4 overflow-hidden d-flex justify-content-center align-items-center"
       >
         <img
-          src="../../assets/mobiles/10/2.jpg"
+          src="../../assets/{{product.productCategory.subCategory}}/{{product.id}}/1.jpg"
           alt="Product image"
           class="img-fluid rounded-start"
+          OpenProductDetail [productId]="product.id"
         />
       </div>
       <div class="col d-flex flex-column">
-        <div class="card-header text-center">Header</div>
+        <!-- <div class="card-header text-center">Header</div> -->
         <div class="card-body">
-          <h5 class="card-title title">Title</h5>
-          <h6 class="card-subtitle my-2 text-primary">?? Product Available</h6>
-          <p class="card-text description">Description</p>
+          <h5 class="card-title title">{{product.title}}</h5>
+          <h6 class="card-subtitle my-2 text-primary">{{product.quantity}} products Available</h6>
+          <p class="card-text description">{{product.description}}</p>
         </div>
 
         <div class="card-body">
-          <h5 class="card-title text-success">
-            Final Price
-            <span class="text-primary">-20% </span>
+          <h2 class="card-title text-success">
+            {{utilityService.applyDiscount(product.price, product.offer.discount)}}
+            <span class="text-primary">-{{product.offer.discount}}%</span>
+          </h2>
+          <h5 class="card-subtitle text-danger text-decoration-line-through">
+            {{product.price}}
           </h5>
-          <h6 class="card-subtitle text-danger text-decoration-line-through">
-            Original Price
-          </h6>
         </div>
         <div class="card-footer d-grid gap-2">
           <button class="btn btn-outline-success" type="button">
@@ -77,21 +81,22 @@
         class="col-4 overflow-hidden d-flex justify-content-center align-items-center"
       >
         <img
-          src="../../assets/mobiles/10/1.jpg"
+          src="../../assets/{{product.productCategory.subCategory}}/{{product.id}}/1.jpg"
           class="img-fluid rounded-start"
           alt="Product Image"
+          OpenProductDetail [productId]="product.id"
         />
       </div>
       <div class="col-8">
         <div class="card-body">
-          <h5 class="card-title title">Title</h5>
+          <h5 class="card-title title">{{product.title}}</h5>
           <h5 class="card-title text-success">
-            Final Price
-            <span class="text-primary"> ?? products are available</span>
+            {{utilityService.applyDiscount(product.price, product.offer.discount)}}
+            <h6 class="card-subtitle text-danger text-decoration-line-through">
+              {{product.price}}
+            </h6>
           </h5>
-          <h6 class="card-subtitle text-danger text-decoration-line-through">
-            Original Price
-          </h6>
+          
         </div>
 
         <div class="card-footer text-muted d-grid gap-2">
@@ -108,12 +113,13 @@
   <div class="card text-center">
 
       <div class="overflow-hidden d-flex justify-content-center align-items-center">
-          <img src="../../assets/mobiles/10/1.jpg" alt=""
-               class="card-img-top">
+          <img src="../../assets/{{product.productCategory.subCategory}}/{{product.id}}/1.jpg" alt=""
+               class="card-img-top"
+               OpenProductDetail [productId]="product.id">
       </div>
 
       <div class="card-body">
-          <h5 class="card-title title">Title</h5>
+          <h5 class="card-title title">{{product.title}}</h5>
       </div>
   </div>
 </div>

@@ -27,7 +27,7 @@
           type="button"
           class="btn btn-outline-secondary"
           [ngClass]="{ active: sortby === 'default' }"
-          (click)="sortby = 'default'"
+          (click)="sortby = 'default'; sortByPrice(sortby)"
         >
           Default
         </button>
@@ -35,7 +35,7 @@
           type="button"
           class="btn btn-outline-secondary"
           [ngClass]="{ active: sortby === 'htl' }"
-          (click)="sortby = 'htl'"
+          (click)="sortby = 'htl'; sortByPrice(sortby)"
         >
           Price(High to Low)
         </button>
@@ -43,7 +43,7 @@
           type="button"
           class="btn btn-outline-secondary"
           [ngClass]="{ active: sortby === 'lth' }"
-          (click)="sortby = 'lth'"
+          (click)="sortby = 'lth'; sortByPrice(sortby)"
         >
           Price(Low to High)
         </button>
@@ -56,16 +56,16 @@
     <!-- Grid View -->
     <div class="grid-view" *ngIf="view === 'grid'">
         <div class="row g-5">
-            <div class="col-3" *ngFor="let product of [1,1,1,1,1]">
-                <app-product></app-product>
+            <div class="col-3" *ngFor="let product of products">
+                <app-product [product]="product"></app-product>
             </div>
         </div>
     </div>
     <!-- List View -->
     <div class="list-view" *ngIf="view === 'list'">
-        <div class="row g-5">
-            <div class="col-3" *ngFor="let product of [1,1,1,1,1]">
-                <app-product [view]="'list'"></app-product>
+        <div class="col-0">
+            <div class="col" *ngFor="let product of products">
+                <app-product [view]="'list'" [product]="product"></app-product>
             </div>
         </div>
     </div>

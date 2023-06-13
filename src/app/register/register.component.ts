@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from '../models/models';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +9,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup
-  invalidRPWD: boolean = false
-  constructor(private fb: FormBuilder) { }
+  registerForm!: FormGroup;
+  invalidRPWD: boolean = false;
+  message= '';
+
+  constructor(
+    private fb: FormBuilder,
+    private navigationService: NavigationService) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -30,6 +36,8 @@ export class RegisterComponent implements OnInit {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
+      address: ['', [Validators.required]],
+      mobile: ['', [Validators.required]],
       pwd: [
         '',
         [
@@ -52,6 +60,12 @@ export class RegisterComponent implements OnInit {
   get Email(): FormControl{
     return this.registerForm.get('email') as FormControl;
   }
+  get Address(): FormControl{
+    return this.registerForm.get('email') as FormControl;
+  }
+  get Mobile(): FormControl{
+    return this.registerForm.get('email') as FormControl;
+  }
   get PWD(): FormControl{
     return this.registerForm.get('pwd') as FormControl;
   }
@@ -59,6 +73,22 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('rpwd') as FormControl;
   }
 
-  register() {}
+  register() {
+    let user: User = {
+      id: 0,
+      firstName: this.FirstName.value,
+      lastName: this.LastName.value,
+      email: this.Email.value,
+      address: "",
+      mobile: "",
+      password: this.PWD.value,
+      createdAt: '',
+      modifiedAt: '',
+  }
+
+  this.navigationService.registerUser(user).subscribe((res: any) => {
+    this.message = res.toString();
+  });
+}
 
 }
